@@ -2,10 +2,10 @@
   "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://dymitrbaranowski.github.io/js-22-13.2-Async",
+  "homepage": "https://dymitrbaranowski.github.io/js-L-R-22-Async",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /js-22-13.2-Async/",
+    "build": "parcel build src/*.html --public-url /js-L-R-22-Async/",
     "server": "json-server --watch db.json -p 4040"
   },
   "repository": {
@@ -24,7 +24,6 @@
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
     "buffer": "^6.0.3",
-    "json-server": "^1.0.0-beta.3",
     "parcel": "^2.6.0",
     "parcel-reporter-clean-dist": "^1.0.4",
     "posthtml-include": "^1.7.4",
