@@ -1,17 +1,44 @@
 // 'https://restcountries.com/v3.1/name/'
 
-async function getCapital() {
-  console.log('start');
-  const URL = 'https://restcountries.com/v3.1/name/';
-  const resp = await fetch(`${URL}Ukraine`);
-  const data = await resp.json();
-  console.log(data);
+// async function getCapital() {
+//   //Лише в тому випадку, коли з даними працюємо в середині функції
+//   try {
+//     const URL = 'https://restcountries.com/v3.1/name/';
+//     const resp = await fetch(`${URL}Ukraine`);
+//     if (!resp.ok) {
+//       throw new Error(resp.statusText);
+//     }
+//     const data = await resp.json();
+//     console.log(data);
+//   } catch (e) {
+//     console.log(e);
+//   }
+//   console.log('end');
+// }
 
-  console.log('end');
+async function getCapital() {
+  // Лише в випадку коли з даними працюємо за межами функції
+  const URL = 'https://restcountries.com/v3.1/name/';
+  const arr = ['sdfweee', 'Ukraine', 'France'];
+
+  const responses = arr.map(async ctr => {
+    const resp = await fetch(`${URL}${ctr}`);
+    if (!resp.ok) {
+      throw new Error('Not found');
+    }
+    return resp.json();
+  });
+
+  const prom = await Promise.allSettled(responses);
+  return prom;
 }
 
-getCapital();
-
+getCapital()
+  .then(data => {
+    const resp = data.filter(({ status }) => status === 'fulfilled');
+    console.log(resp);
+  })
+  .catch(e => console.log(e));
 // async function getCapital() {
 //     // Лише в випадку коли з даними працюємо в середині функції
 //     try {
