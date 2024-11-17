@@ -16,29 +16,31 @@
 //   console.log('end');
 // }
 
-async function getCapital() {
-  // Лише в випадку коли з даними працюємо за межами функції
-  const URL = 'https://restcountries.com/v3.1/name/';
-  const arr = ['sdfweee', 'Ukraine', 'France'];
+// async function getCapital() {
+//   // Лише в випадку коли з даними працюємо за межами функції
+//   const URL = 'https://restcountries.com/v3.1/name/';
+//   const arr = ['sdfweee', 'Ukraine', 'France'];
 
-  const responses = arr.map(async ctr => {
-    const resp = await fetch(`${URL}${ctr}`);
-    if (!resp.ok) {
-      throw new Error('Not found');
-    }
-    return resp.json();
-  });
+//   const responses = arr.map(async ctr => {
+//     const resp = await fetch(`${URL}${ctr}`);
+//     if (!resp.ok) {
+//       throw new Error('Not found');
+//     }
+//     return resp.json();
+//   });
 
-  const prom = await Promise.allSettled(responses);
-  return prom;
-}
+//   const prom = await Promise.allSettled(responses);
+//   return prom;
+// }
 
-getCapital()
-  .then(data => {
-    const resp = data.filter(({ status }) => status === 'fulfilled');
-    console.log(resp);
-  })
-  .catch(e => console.log(e));
+// getCapital()
+//   .then(data => {
+//     const res = data
+//       .filter(({ status }) => status === 'fulfilled')
+//       .map(({ value }) => value[0]);
+//     const rej = data.filter(({ status }) => status === 'rejected');
+//   })
+//   .catch(e => console.log(e));
 // async function getCapital() {
 //     // Лише в випадку коли з даними працюємо в середині функції
 //     try {
@@ -114,17 +116,23 @@ getCapital()
 
 // Перерва до 21-10
 
-// const searchForm = document.querySelector('.js-search');
-// const addCountry = document.querySelector('.js-add');
-// const list = document.querySelector('.js-list');
-// const formContainer = document.querySelector('.js-form-container')
-// const markup = '<input type="text" name="country">'
-// addCountry.addEventListener('click', handlerAddInput);
+const searchForm = document.querySelector('.js-search');
+const addCountry = document.querySelector('.js-add');
+const list = document.querySelector('.js-list');
+const formContainer = document.querySelector('.js-form-container');
+const markup = '<input type="text" name="country">';
+addCountry.addEventListener('click', handlerAddInput);
 
-// function handlerAddInput() {
-//     formContainer.insertAdjacentHTML('beforeend', markup)
-// }
+function handlerAddInput() {
+  formContainer.insertAdjacentHTML('beforeend', markup);
+}
 
+searchForm.addEventListener('submit', handlerForm);
+
+function handlerForm(evt) {
+  evt.preventDefault();
+  console.dir(evt.currentTarget);
+}
 // searchForm.addEventListener('submit', handlerForm);
 
 // function handlerForm(evt) {
