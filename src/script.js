@@ -131,7 +131,9 @@ searchForm.addEventListener('submit', handlerForm);
 
 function handlerForm(evt) {
   evt.preventDefault();
-  console.dir(evt.currentTarget);
+  const data = new FormData(evt.currentTarget);
+  const arr = data.getAll('country').filter(item => item);
+  console.log(arr);
 }
 // searchForm.addEventListener('submit', handlerForm);
 
