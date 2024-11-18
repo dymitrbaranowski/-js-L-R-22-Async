@@ -1,2 +1,0 @@
-!function(){var e=document.querySelector(".js-search"),t=document.querySelector(".js-add"),n=(document.querySelector(".js-list"),document.querySelector(".js-form-container"));t.addEventListener("click",(function(){n.insertAdjacentHTML("beforeend",'<input type="text" name="country">')})),e.addEventListener("submit",(function(e){e.preventDefault(),console.dir(e.currentTarget)}))}();
-//# sourceMappingURL=index.3b554a5d.js.map
