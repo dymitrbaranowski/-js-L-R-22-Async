@@ -132,8 +132,34 @@ searchForm.addEventListener('submit', handlerForm);
 function handlerForm(evt) {
   evt.preventDefault();
   const data = new FormData(evt.currentTarget);
-  const arr = data.getAll('country').filter(item => item);
-  console.log(arr);
+  const arr = data
+    .getAll('country')
+    .filter(item => item)
+    .map(item => item.trim());
+  getCountries(arr);
+}
+
+async function getCountries(arr) {
+  const resps = arr.map(async item => {
+    const resp = await fetch(`https://restcountries.com/v3.1/name/${item}`);
+    if (!resp.ok) {
+      throw new Error();
+    }
+
+    return resp.json();
+  });
+
+  const data = await Promise.allSettled(resps);
+
+  const countryObg = data
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value[0]);
+
+  return countryObg;
+}
+
+async function getWeather(params) {
+  const Base_URL = 'http://api.weatherapi.com/v1';
 }
 // searchForm.addEventListener('submit', handlerForm);
 
