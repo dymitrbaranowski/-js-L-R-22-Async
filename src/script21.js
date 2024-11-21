@@ -283,3 +283,58 @@
 // }
 // fetch('https://jsonplaceholder.typicode.com/posts/1',options)
 // .then(resp => console.log(resp))
+
+const form = document.querySelector('.js-question');
+const getBtn = document.querySelector('.js-get-all');
+
+form.addEventListener('submit', handlerQuestion);
+getBtn.addEventListener('click', handlerGetQuestions);
+
+function handlerQuestion(evt) {
+  evt.preventDefault();
+  const { userName, phone, email, question } = evt.currentTarget.elements;
+  const request = {
+    name: userName.value,
+    phone: phone.value,
+    email: email.value,
+    comment: question.value,
+  };
+  serviceQuestion(request)
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+    .finally(() => evt.target.reset());
+}
+
+function handlerGetQuestions(evt) {
+  serviceGetQuestions()
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+}
+
+function serviceQuestion(data) {
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+
+  return fetch('https://jsonplaceholder.typicode.com/posts', options).then(
+    resp => {
+      if (!resp.ok) {
+        throw new Error(resp.statusText);
+      }
+      return resp.json();
+    }
+  );
+}
+
+function serviceGetQuestions() {
+  return fetch('https://jsonplaceholder.typicode.com/posts').then(resp => {
+    if (!resp.ok) {
+      throw new Error(resp.statusText);
+    }
+    return resp.json();
+  });
+}
