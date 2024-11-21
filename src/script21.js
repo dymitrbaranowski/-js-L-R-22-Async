@@ -284,57 +284,141 @@
 // fetch('https://jsonplaceholder.typicode.com/posts/1',options)
 // .then(resp => console.log(resp))
 
-const form = document.querySelector('.js-question');
-const getBtn = document.querySelector('.js-get-all');
+// const form = document.querySelector('.js-question');
+// const getBtn = document.querySelector('.js-get-all');
 
-form.addEventListener('submit', handlerQuestion);
-getBtn.addEventListener('click', handlerGetQuestions);
+// form.addEventListener('submit', handlerQuestion);
+// getBtn.addEventListener('click', handlerGetQuestions);
 
-function handlerQuestion(evt) {
-  evt.preventDefault();
-  const { userName, phone, email, question } = evt.currentTarget.elements;
-  const request = {
-    name: userName.value,
-    phone: phone.value,
-    email: email.value,
-    comment: question.value,
-  };
-  serviceQuestion(request)
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
-    .finally(() => evt.target.reset());
-}
+// function handlerQuestion(evt) {
+//   evt.preventDefault();
+//   const { userName, phone, email, question } = evt.currentTarget.elements;
+//   const request = {
+//     name: userName.value,
+//     phone: phone.value,
+//     email: email.value,
+//     comment: question.value,
+//   };
+//   serviceQuestion(request)
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err))
+//     .finally(() => evt.target.reset());
+// }
 
-function handlerGetQuestions(evt) {
-  serviceGetQuestions()
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-}
+// function handlerGetQuestions(evt) {
+//   serviceGetQuestions()
+//     .then(data => console.log(data))
+//     .catch(err => console.log(err));
+// }
 
-function serviceQuestion(data) {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-type': 'application/json',
-    },
-  };
+// function serviceQuestion(data) {
+//   const options = {
+//     method: 'POST',
+//     body: JSON.stringify(data),
+//     headers: {
+//       'Content-type': 'application/json',
+//     },
+//   };
 
-  return fetch('https://jsonplaceholder.typicode.com/posts', options).then(
-    resp => {
-      if (!resp.ok) {
-        throw new Error(resp.statusText);
-      }
-      return resp.json();
-    }
-  );
-}
+//   return fetch('https://jsonplaceholder.typicode.com/posts', options).then(
+//     resp => {
+//       if (!resp.ok) {
+//         throw new Error(resp.statusText);
+//       }
+//       return resp.json();
+//     }
+//   );
+// }
 
-function serviceGetQuestions() {
-  return fetch('https://jsonplaceholder.typicode.com/posts').then(resp => {
-    if (!resp.ok) {
-      throw new Error(resp.statusText);
-    }
-    return resp.json();
-  });
-}
+// function serviceGetQuestions() {
+//   return fetch('https://jsonplaceholder.typicode.com/posts').then(resp => {
+//     if (!resp.ok) {
+//       throw new Error(resp.statusText);
+//     }
+//     return resp.json();
+//   });
+// }
+
+// async function serviceCountry() {
+//   const response = await fetch('https://restcountries.com/v3.1/name/Ukraine');
+
+//   if (!response.ok) {
+//     throw new Error(response.statusText);
+//   }
+//   const data = await response.json();
+//   //   console.log(data);
+//   //   console.log('hello');
+//   return data;
+// }
+
+// serviceCountry()
+//   .then(data => console.log(data))
+//   .catch(err => console.log(err));
+
+// async function serviceCountry() {
+//   try {
+//     const response = await fetch('https://restcountries.com/v3.1/name/Ukraine');
+
+//     if (!response.ok) {
+//       throw new Error(response.statusText);
+//     }
+//     const data = await response.json();
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// serviceCountry();
+
+// async function serviceCountries() {
+//   //   const resp1 = await fetch('https://restcountries.com/v3.1/name/Ukraine');
+//   //   const resp2 = await fetch('https://restcountries.com/v3.1/name/France');
+//   //   const resp3 = await fetch('https://restcountries.com/v3.1/name/Poland');
+//   const countries = ['Ukraine', 'France', 'Poland'];
+//   const responses = countries.map(async country => {
+//     const resp = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+//     return resp.json();
+//   });
+// }
+// serviceCountries();
+
+// const serviceCountry = async () => {
+//   const response = await fetch('https://restcountries.com/v3.1/name/Ukraine');
+
+//   if (!response.ok) {
+//     throw new Error(response.statusText);
+//   }
+//   const data = await response.json();
+//   console.log(data);
+// };
+
+// serviceCountry();
+
+// const serviceCountry = async function () {
+//   const response = await fetch('https://restcountries.com/v3.1/name/Ukraine');
+
+//   if (!response.ok) {
+//     throw new Error(response.statusText);
+//   }
+//   const data = await response.json();
+//   console.log(data);
+// };
+
+// serviceCountry();
+
+// const service = {
+//   countryName: 'Ukraine',
+//   async serviceCountry() {
+//     const response = await fetch(
+//       `https://restcountries.com/v3.1/name/${this.countryName}`
+//     );
+//     console.log(response);
+//     if (!response.ok) {
+//       throw new Error(response.statusText);
+//     }
+//     const data = await response.json();
+//     console.log(data);
+//   },
+// };
+
+// service.serviceCountry();
