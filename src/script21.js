@@ -422,3 +422,42 @@
 // };
 
 // service.serviceCountry();
+
+const elements = {
+  form: document.querySelector('.js-search'),
+  formContainer: document.querySelector('.js-form-container'),
+  addfield: document.querySelector('.js-add'),
+};
+
+elements.addfield.addEventListener('click', handlerAdd);
+
+elements.form.addEventListener('submit', handlerSearch);
+
+function handlerAdd() {
+  elements.formContainer.insertAdjacentHTML(
+    'beforeend',
+    '<input type="text" name="country" />'
+  );
+}
+
+function handlerSearch(evt) {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.currentTarget);
+  const countries = formData
+    .getAll('country')
+    .map(item => item.trim())
+    .filter(item => item);
+  serviceCountries(countries);
+}
+
+async function serviceCountries(countries) {
+  const BASE_URL = 'https://restcountries.com/v3.1/name/';
+  const responses = await countries.map(async country => {
+    const response = await fetch(`${BASE_URL}${country}`);
+    return response.json();
+  });
+
+  const data = await Promise.allSettled(responses);
+  console.log(responses);
+}
