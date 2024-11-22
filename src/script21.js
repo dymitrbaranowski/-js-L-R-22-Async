@@ -440,7 +440,7 @@ function handlerAdd() {
   );
 }
 
-function handlerSearch(evt) {
+async function handlerSearch(evt) {
   evt.preventDefault();
 
   const formData = new FormData(evt.currentTarget);
@@ -448,7 +448,9 @@ function handlerSearch(evt) {
     .getAll('country')
     .map(item => item.trim())
     .filter(item => item);
-  serviceCountries(countries);
+
+  const capitals = await serviceCountries(countries);
+  console.log(capitals);
 }
 
 async function serviceCountries(countries) {
@@ -459,5 +461,23 @@ async function serviceCountries(countries) {
   });
 
   const data = await Promise.allSettled(responses);
-  console.log(responses);
+
+  return data
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value[0].capital[0]);
+}
+
+async function serviceWeather(capitals) {
+  const BASE_URL = 'http://api.weatherapi.com/v1';
+  const END_POINT = '/current.json';
+  const API_KEY = '996939ba8c804529aee100853241011';
+
+  const responses = await capitals.map(async capital => {
+    const response = await fetch(
+      `${BASE_URL}${END_POINT}?key=${API_KEY}&q=${capital}&lang=uk`
+    );
+    return response.json();
+  });
+
+  console.log(response);
 }
