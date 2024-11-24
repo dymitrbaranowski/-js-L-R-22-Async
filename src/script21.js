@@ -427,6 +427,7 @@ const elements = {
   form: document.querySelector('.js-search'),
   formContainer: document.querySelector('.js-form-container'),
   addfield: document.querySelector('.js-add'),
+  list: document.querySelector('.js-list'),
 };
 
 elements.addfield.addEventListener('click', handlerAdd);
@@ -449,9 +450,15 @@ async function handlerSearch(evt) {
     .map(item => item.trim())
     .filter(item => item);
 
-  const capitals = await serviceCountries(countries);
-  const weather = await serviceWeather(capitals);
-  console.log(weather);
+  try {
+    const capitals = await serviceCountries(countries);
+    const weather = await serviceWeather(capitals);
+    elements.list.innerHTML = createMarkup(weather);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    evt.target.reset();
+  }
 }
 
 async function serviceCountries(countries) {
@@ -501,4 +508,33 @@ async function serviceWeather(capitals) {
         temp_c,
       })
     );
+}
+
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({ country, name, temp_c, icon, text }) => `
+       <li><img src="${icon}" alt="${text}" />
+      <h2>${country}<h2>
+      </h2>${name}</h2>
+      <p>${text}<p>
+      </p>${temp_c}</p>
+      </li>
+  `
+    )
+    .join('');
+
+  //   return arr.reduce(
+  //     (acc, { country, name, temp_c, icon, text }) =>
+  //       acc +
+  //       `
+  //      <li><img src="${icon}" alt="${text}" />
+  //     <h2>${country}<h2>
+  //     </h2>${name}</h2>
+  //     <p>${text}<p>
+  //     </p>${temp_c}</p>
+  //     </li>
+  // `,
+  //     ''
+  //   );
 }
