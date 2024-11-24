@@ -450,7 +450,8 @@ async function handlerSearch(evt) {
     .filter(item => item);
 
   const capitals = await serviceCountries(countries);
-  console.log(capitals);
+  const weather = await serviceWeather(capitals);
+  console.log(weather);
 }
 
 async function serviceCountries(countries) {
@@ -479,5 +480,25 @@ async function serviceWeather(capitals) {
     return response.json();
   });
 
-  console.log(response);
+  const data = await Promise.allSettled(responses);
+
+  return data
+    .filter(({ status }) => status === 'fulfilled')
+    .map(
+      ({
+        value: {
+          current: {
+            temp_c,
+            condition: { text, icon },
+          },
+          location: { country, name },
+        },
+      }) => ({
+        country,
+        name,
+        text,
+        icon,
+        temp_c,
+      })
+    );
 }
